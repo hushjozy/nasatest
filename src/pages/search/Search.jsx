@@ -4,26 +4,30 @@ import { BASE_URL } from "../../helpers/helper";
 
 const Search = () => {
   const [searchText, setSearchText] = useState("");
+  const [start, setStart] = useState();
+  const [end, setEnd] = useState();
   const [result, setResult] = useState([]);
   const navigate = useNavigate();
 
   const runSearch = async () => {
     try {
       const response = await fetch(
-        `${BASE_URL}/search?q=${searchText}&media_type=image`,
+        `${BASE_URL}/search?location=${""}&title=${""}&photographer=${""}year_start=${start.toString()}&year_end=${end.toString()}&q=${searchText}&media_type=image`,
         {
           method: "GET",
         }
       );
       const data = await response.json();
-      console.log(data);
+
       if (
         (data.status_code >= 400 && data.status_code <= 500) ||
         data.success === false
       ) {
       } else {
         console.log(data?.collection?.items);
+
         setResult(data?.collection?.items);
+        alert(data?.collection?.items.length + " items have been found");
         return data;
       }
     } catch (error) {
@@ -39,6 +43,21 @@ const Search = () => {
           className="search_field"
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
+          placeholder="Search Word"
+        />
+        <input
+          type={"number"}
+          className="search_field two"
+          value={start}
+          placeholder="Year Start E.g(2003)"
+          onChange={(e) => setStart(e.target.value)}
+        />{" "}
+        <input
+          type={"number"}
+          className="search_field two"
+          value={end}
+          placeholder="Year End E.g(2006)"
+          onChange={(e) => setEnd(e.target.value)}
         />
         <button className="btn-search" onClick={() => runSearch()}>
           Search

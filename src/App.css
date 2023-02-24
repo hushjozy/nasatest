@@ -111,6 +111,12 @@ a .readmore:hover i {
   height: 100%;
   margin-block: 4vh;
   padding-block: 1%;
+  border: 2px solid green;
+}
+.two {
+  width: 35%;
+  margin-right: 2%;
+  margin-block: 1vh;
 }
 .location {
   padding: 0 20px;
