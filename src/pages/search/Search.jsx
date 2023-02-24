@@ -4,15 +4,21 @@ import { BASE_URL } from "../../helpers/helper";
 
 const Search = () => {
   const [searchText, setSearchText] = useState("");
-  const [start, setStart] = useState();
-  const [end, setEnd] = useState();
+  const [start, setStart] = useState(0);
+  const [end, setEnd] = useState(0);
   const [result, setResult] = useState([]);
   const navigate = useNavigate();
 
   const runSearch = async () => {
+    let param = "";
+    if (start.length == 4 && end.length == 4) {
+      param = "year_start=" + start.toString() + "&year_end=" + end.toString();
+    } else {
+      param = "";
+    }
     try {
       const response = await fetch(
-        `${BASE_URL}/search?location=${""}&title=${""}&photographer=${""}year_start=${start.toString()}&year_end=${end.toString()}&q=${searchText}&media_type=image`,
+        `${BASE_URL}/search?${param}&q=${searchText}&media_type=image&location&title&photographer`,
         {
           method: "GET",
         }
